@@ -2,7 +2,7 @@ Ext.define("LoginApp.view.login.Login", {
   extend: "Ext.window.Window",
   xtype: "app-login",
 
-  requires: ["LoginApp.view.login.LoginController", "Ext.form.Panel"],
+  requires: ["LoginApp.view.login.LoginController"],
   controller: "login",
 
   closable: false,
@@ -37,16 +37,16 @@ Ext.define("LoginApp.view.login.Login", {
       items: [
         {
           xtype: "label",
-          text: "Isi username dan password untuk masuk aplikasi:",
+          text: "Isi email dan password untuk masuk aplikasi:",
         },
         {
           xtype: "textfield",
-          reference: "txtuserid",
-          name: "username",
+          reference: "txtemail",
+          name: "email",
           height: 55,
           hideLabel: false,
           allowBlank: false,
-          emptyText: "Username",
+          emptyText: "Email",
         },
         {
           xtype: "textfield",

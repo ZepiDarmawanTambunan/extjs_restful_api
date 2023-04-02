@@ -13,7 +13,6 @@ Ext.define("LoginApp.view.main.Main", {
   requires: [
     "Ext.plugin.Viewport",
     "Ext.window.MessageBox",
-
     "LoginApp.view.main.MainController",
     "LoginApp.view.main.MainModel",
     "LoginApp.view.main.List",
@@ -61,6 +60,7 @@ Ext.define("LoginApp.view.main.Main", {
 
   defaults: {
     bodyPadding: 20,
+    scrollable: true, // panel dapat di-scroll
     tabConfig: {
       responsiveConfig: {
         wide: {

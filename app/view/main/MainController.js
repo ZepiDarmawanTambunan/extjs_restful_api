@@ -15,7 +15,7 @@ Ext.define("LoginApp.view.main.MainController", {
       function (choice) {
         if (choice == "yes") {
           // Hapus variabel PenggunaMasuk dari localStorage
-          localStorage.removeItem("PenggunaMasuk");
+          localStorage.removeItem("token");
 
           // Hapus tampilan Main / utama
           me.getView().destroy();

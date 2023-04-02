@@ -13,7 +13,7 @@ Ext.define("LoginApp.view.pegawais.Pegawais", {
   controller: "pegawais-pegawais",
 
   // title
-  title: "Pegawai",
+  title: "Pegawai | get api && post api: https://dummyjson.com/docs/users",
 
   // alias view model
   viewModel: {
@@ -23,14 +23,42 @@ Ext.define("LoginApp.view.pegawais.Pegawais", {
   // items apa saja yg akan ditampilkan
   items: [
     {
+      xtype: "button",
+      text: "Tambah",
+      iconCls: "x-fa fa-sign-out-alt",
+      handler: "formTambah",
+      margin: "10 0 10 0",
+    },
+    {
       xtype: "grid",
       bind: {
         store: "{pegawai}", // ambil data dari store
       },
       columns: [
-        { text: "Name", dataIndex: "name" },
+        { text: "ID", dataIndex: "id" },
+        { text: "Name", dataIndex: "firstName" },
         { text: "Email", dataIndex: "email", flex: 1 },
         { text: "Phone", dataIndex: "phone", flex: 1 },
+        {
+          text: "Aksi",
+          xtype: "actioncolumn",
+          width: 100,
+          items: [
+            {
+              iconCls: "x-fa fa-edit",
+              tooltip: "Edit",
+              handler: "onEditClick",
+            },
+            {
+              flex: '1',
+            },
+            {
+              iconCls: "x-fa fa-trash",
+              tooltip: "Hapus",
+              handler: "onHapusClick",
+            },
+          ],
+        },
       ],
       listeners: {
         select: "onItemSelected",

@@ -8,10 +8,10 @@ Ext.define("LoginApp.store.Pegawai", {
 
   proxy: {
     type: "ajax",
-    url: "https://jsonplaceholder.typicode.com/users",
+    url: "https://dummyjson.com/users?select=firstName,email,phone",
     reader: {
       type: "json",
-      rootProperty: "",
+      rootProperty: "users",
     },
   },
 
