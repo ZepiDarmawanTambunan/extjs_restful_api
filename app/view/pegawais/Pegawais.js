@@ -31,8 +31,36 @@ Ext.define("LoginApp.view.pegawais.Pegawais", {
     },
     {
       xtype: "grid",
+      id: "pegawai", //
       bind: {
         store: "{pegawai}", // ambil data dari store
+      },
+      bbar: {
+        xtype: "pagingtoolbar",
+        bind: {
+          store: "{pegawai}",
+        },
+        displayInfo: true,
+        displayMsg: "Menampilkan data {0} - {1} dari {2}",
+        emptyMsg: "Tidak ada data untuk ditampilkan",
+        listeners: {
+          beforechange: "onPageChange",
+        },
+        items: function () {
+          var store = this.up("grid").getStore();
+          var total = store.getTotalCount();
+          var limit = store.getPageSize();
+          var pageCount = Math.ceil(total / limit);
+          var items = [];
+          for (var i = 1; i <= pageCount; i++) {
+            items.push({
+              text: i,
+              value: i,
+              enableToggle: true,
+            });
+          }
+          return items;
+        },
       },
       columns: [
         { text: "ID", dataIndex: "id" },
@@ -50,7 +78,7 @@ Ext.define("LoginApp.view.pegawais.Pegawais", {
               handler: "onEditClick",
             },
             {
-              flex: '1',
+              flex: "1",
             },
             {
               iconCls: "x-fa fa-trash",

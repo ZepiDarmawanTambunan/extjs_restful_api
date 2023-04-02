@@ -15,25 +15,25 @@ Ext.define("LoginApp.Application", {
     },
   },
 
-  stores: ["Pegawai"],
-
   // LIFECYCLE
   launch: function () {
-    Ext.getStore("Pegawai").load();
     // Storage yang mau dipake bebas bisa pake apa aja, ex: Cookies, LocalStorage, etc.
     let masukApp;
 
     const now = new Date().getTime();
-    const tokenExpire = localStorage.getItem("token_expire");
-    console.log(`${now} dan ${tokenExpire}`);
-    if (now > tokenExpire) {
-      // waktu kadaluarsa telah tercapai
-      localStorage.removeItem("access_token");
-      localStorage.removeItem("token_expire");
-    } else {
-      // waktu kadaluarsa masih berlaku
-      masukApp = localStorage.getItem("access_token");
-      console.log("Token: ", masukApp);
+    const data = JSON.parse(localStorage.getItem("data"));
+    if (
+      typeof data !== "undefined" &&
+      data !== null &&
+      typeof data.token_expire !== "undefined"
+    ) {
+      // lakukan operasi yang membutuhkan data.tokenExpire
+      if (now > data.tokenExpire) {
+        localStorage.clear();
+        masukApp = false;
+      } else {
+        masukApp = true;
+      }
     }
 
     // cek di localStorage variabel masukApp (true / false)

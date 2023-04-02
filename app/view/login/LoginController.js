@@ -37,11 +37,18 @@ Ext.define("LoginApp.view.login.LoginController", {
               // TOKEN EXPIRED
               const now = new Date();
               const expireTime = now.getTime() + 24 * 60 * 60 * 1000; // ditambah 24 jam (dalam milidetik)
-              localStorage.setItem("token_expire", expireTime);
 
-              // TOKEN
-              let token = JSON.parse(response.responseText).result.access_token;
-              localStorage.setItem("access_token", token);
+              // RESPONSE
+              let result = JSON.parse(response.responseText).result;
+
+              const data = {
+                access_token: result.access_token,
+                token_type: result.token_type,
+                user: result.user,
+                token_expire: expireTime,
+              };
+
+              localStorage.setItem("data", JSON.stringify(data));
 
               me.getView().destroy(); // view login dihapus
               Ext.widget("app-main"); //pindah ke app-main

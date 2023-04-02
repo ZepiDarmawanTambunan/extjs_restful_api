@@ -62,8 +62,7 @@ Ext.define("LoginApp.view.pegawais.PegawaiEdit", {
               Ext.Msg.alert("Sukses", "Data pegawai berhasil diubah.");
               form.reset();
               form.up("window").close();
-              var pegawaiStore = Ext.getStore("pegawai");
-              pegawaiStore.reload();
+              Ext.getCmp("pegawai").store.reload(); //id grid di pegawai.js
             },
             failure: function (response, options) {
               var jsonResponse = Ext.decode(response.responseText);

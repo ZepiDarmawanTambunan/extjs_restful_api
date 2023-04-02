@@ -12,6 +12,8 @@ Ext.define("LoginApp.store.Pegawai", {
     reader: {
       type: "json",
       rootProperty: "users",
+      totalProperty: "total",
+      limitProperty: "limit",
     },
   },
 

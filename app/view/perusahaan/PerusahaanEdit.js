@@ -1,9 +1,9 @@
-Ext.define("LoginApp.view.pegawais.PegawaiCreate", {
+Ext.define("LoginApp.view.perusahaan.PerusahaanEdit", {
   extend: "Ext.window.Window",
-  xtype: "pegawai-create",
-  requires: ["LoginApp.store.Pegawai"],
+  xtype: "perusahaan-edit",
+  requires: ["LoginApp.store.Perusahaan"],
 
-  title: "Tambah Pegawai",
+  title: "Edit Perusahaan",
   modal: true,
   closable: true,
   autoShow: true,
@@ -12,7 +12,7 @@ Ext.define("LoginApp.view.pegawais.PegawaiCreate", {
   items: [
     {
       xtype: "form",
-      reference: "pegawaiForm",
+      reference: "perusahaanForm",
       bodyPadding: 10,
       defaults: {
         xtype: "textfield",
@@ -23,18 +23,13 @@ Ext.define("LoginApp.view.pegawais.PegawaiCreate", {
       },
       items: [
         {
+          fieldLabel: "ID",
+          name: "id",
+          readOnly: true,
+        },
+        {
           fieldLabel: "Nama",
-          name: "firstName",
-        },
-        {
-          fieldLabel: "Email",
-          name: "email",
-          vtype: "email",
-        },
-        {
-          fieldLabel: "Telpon",
-          name: "phone",
-          xtype: "numberfield",
+          name: "name",
         },
       ],
     },
@@ -42,28 +37,35 @@ Ext.define("LoginApp.view.pegawais.PegawaiCreate", {
 
   buttons: [
     {
-      text: "Simpan",
+      text: "Edit",
       formBind: true,
       handler: function () {
+        const data = JSON.parse(localStorage.getItem("data"));
+        const token = data.token_type + " " + data.access_token;
         var form = this.up("window").down("form");
+
         if (form.isValid()) {
           var values = form.getValues(); // ambil nilai dari form
+          console.log(values);
           Ext.Ajax.request({
-            url: "https://dummyjson.com/users/add",
+            url: "http://localhost:8000/api/company/update/" + values.id,
             method: "POST",
             jsonData: values, // kirim nilai form dalam bentuk JSON
+            headers: {
+              Authorization: token, // token diambil dari localStorage
+            },
             success: function (response, options) {
               var jsonResponse = Ext.decode(response.responseText);
-              Ext.Msg.alert("Sukses", "Data pegawai berhasil disimpan.");
+              Ext.Msg.alert("Sukses", "Data perusahaan berhasil diubah.");
               form.reset();
               form.up("window").close();
-              Ext.getCmp("pegawai").store.reload(); //id grid di pegawai.js
+              Ext.getCmp("perusahaan").store.reload(); //id grid di perusahaan.js
             },
             failure: function (response, options) {
               var jsonResponse = Ext.decode(response.responseText);
               Ext.Msg.alert(
                 "Gagal",
-                "Terjadi kesalahan saat menyimpan data pegawai."
+                "Terjadi kesalahan saat menyimpan data perusahaan."
               );
             },
           });
@@ -71,4 +73,8 @@ Ext.define("LoginApp.view.pegawais.PegawaiCreate", {
       },
     },
   ],
+
+  loadRecord: function (record) {
+    this.down("form").loadRecord(record);
+  },
 });

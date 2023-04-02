@@ -100,11 +100,9 @@ Ext.define("LoginApp.view.main.Main", {
       items: [{ xtype: "viewpegawai" }],
     },
     {
-      title: "Groups",
+      title: "Perusahaan",
       iconCls: "fa-users",
-      bind: {
-        html: "{loremIpsum}",
-      },
+      items: [{ xtype: "viewperusahaan" }],
     },
     {
       title: "Settings",

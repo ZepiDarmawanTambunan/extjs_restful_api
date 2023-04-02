@@ -29,7 +29,7 @@ Ext.define("LoginApp.view.pegawais.PegawaisController", {
           url: `https://dummyjson.com/users/${id}`,
           method: "DELETE",
           success: function (response) {
-            grid.getStore().remove(record);
+            Ext.getCmp("pegawai").store.reload(); //id grid di pegawai.js
             Ext.Msg.alert("Sukses", "Data pegawai berhasil dihapus.");
           },
           failure: function (response) {
@@ -38,5 +38,13 @@ Ext.define("LoginApp.view.pegawais.PegawaisController", {
         });
       }
     });
+  },
+  onPageChange: function (pagingToolbar, page, eOpts) {
+    var limit = pagingToolbar.store.getPageSize();
+    var skip = (page - 1) * limit;
+    var url =
+      "https://dummyjson.com/users?select=firstName,email,phone&skip=" + skip;
+    pagingToolbar.store.getProxy().setUrl(url);
+    pagingToolbar.store.load();
   },
 });
